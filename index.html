@@ -10,93 +10,62 @@
 </head>
 <body>
 
-<!-- NAV -->
+<!-- NAVIGATION -->
 <nav id="mainNav">
   <div class="nav-logo" onclick="goToHome()">
     <div class="nav-logo-icon">C$</div>
     CashCourse
   </div>
   <ul class="nav-links">
-    <li><a href="#" id="nav-home" onclick="showPage('home'); return false;" class="active">Home</a></li>
-    <li><a href="#" id="nav-curriculum" onclick="showPage('curriculum'); return false;">Curriculum</a></li>
-    <li><a href="#" id="nav-lesson" onclick="showPage('lesson'); return false;">Lessons</a></li>
-    <li><a href="#" id="nav-resources" onclick="showPage('resources'); return false;">Resources</a></li>
-    <li><a href="#" id="nav-about" onclick="showPage('about'); return false;">About</a></li>
+    <li><a href="#" onclick="showPage('home');return false;" class="active">Home</a></li>
+    <li><a href="#" onclick="showPage('curriculum');return false;">Curriculum</a></li>
+    <li><a href="#" onclick="showPage('lesson');return false;">Lessons</a></li>
+    <li><a href="#" onclick="showPage('resources');return false;">Resources</a></li>
+    <li><a href="#" onclick="showPage('about');return false;">About</a></li>
   </ul>
   <div class="nav-cta">
-    <button id="navLoginBtn" class="btn-ghost" onclick="openAuthModal('login')">Log In</button>
-    <button id="navSignupBtn" class="btn-primary" onclick="openAuthModal('signup')">Start Learning</button>
-    <div id="navUserArea" style="display:none;align-items:center;gap:10px;">
-      <span id="navStreakBadge" class="streak-badge"></span>
-      <span id="navUserName" class="nav-user-name"></span>
-      <button class="btn-ghost" onclick="handleLogout()">Log Out</button>
-    </div>
+    <button onclick="openAuthModal('login')">Log In</button>
+    <button onclick="openAuthModal('signup')">Start Learning</button>
   </div>
-  <button class="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
 </nav>
-
-<!-- MOBILE MENU -->
-<div class="mobile-menu" id="mobileMenu">
-  <a href="#" onclick="showPage('home'); toggleMobileMenu(); return false;">Home</a>
-  <a href="#" onclick="showPage('curriculum'); toggleMobileMenu(); return false;">Curriculum</a>
-  <a href="#" onclick="showPage('lesson'); toggleMobileMenu(); return false;">Lessons</a>
-  <a href="#" onclick="showPage('resources'); toggleMobileMenu(); return false;">Resources</a>
-  <a href="#" onclick="showPage('about'); toggleMobileMenu(); return false;">About</a>
-  <button class="btn-primary" style="margin-top:20px;width:100%;padding:14px;border-radius:12px;" onclick="openAuthModal('signup');toggleMobileMenu();">Start Learning Free</button>
-</div>
 
 <!-- PAGES -->
 <div id="page-home" class="page active">
-  <!-- Home content copied from original code -->
+  <h1>Welcome to CashCourse!</h1>
+  <p>Learn Money. Build Your Future.</p>
 </div>
 
 <div id="page-curriculum" class="page">
-  <!-- Curriculum content copied from original code -->
+  <h1>Curriculum</h1>
+  <p>Structured modules to master financial literacy.</p>
 </div>
 
 <div id="page-lesson" class="page">
-  <!-- Lesson content copied from original code -->
+  <h1>Lesson</h1>
+  <p>Lesson content will appear here.</p>
 </div>
 
 <div id="page-resources" class="page">
-  <!-- Resources content copied from original code -->
+  <h1>Resources</h1>
+  <p>Interactive calculators, templates, and tools.</p>
 </div>
 
 <div id="page-about" class="page">
-  <!-- About content copied from original code -->
+  <h1>About Us</h1>
+  <p>CashCourse was built to make financial education accessible to all.</p>
 </div>
-
-<!-- FOOTER -->
-<footer>
-  <!-- Footer content copied from original code -->
-</footer>
 
 <!-- AUTH MODAL -->
-<div id="authModal" class="modal-backdrop" style="display:none">
+<div id="authModal" class="modal-backdrop" style="display:none;">
   <div class="modal-box">
-    <button class="modal-close" onclick="closeAuthModal()">&#10005;</button>
-    <div class="modal-logo"><div class="nav-logo-icon">C$</div></div>
-    <h2 class="modal-title" id="authModalTitle">Welcome back</h2>
-    <p class="modal-sub">Track your progress across all lessons</p>
-    <div id="authNameGroup">
-      <label class="field-label">Your Name</label>
-      <input class="field-input" id="authName" type="text" placeholder="e.g. Alex Johnson">
-    </div>
-    <label class="field-label">Email</label>
-    <input class="field-input" id="authEmail" type="email" placeholder="you@example.com">
-    <label class="field-label">Password</label>
-    <input class="field-input" id="authPassword" type="password" placeholder="Min. 6 characters">
-    <div id="authError" class="auth-error" style="display:none"></div>
-    <button class="btn-hero-primary" id="authSubmitBtn" onclick="handleAuthSubmit()" style="width:100%;justify-content:center;margin-top:16px;">Log In</button>
-    <p class="auth-toggle" id="authToggleMsg">
-      Don't have an account? <a href="#" onclick="switchAuthMode('signup');return false;">Sign up free &#8594;</a>
-    </p>
+    <button onclick="closeAuthModal()">Close</button>
+    <h2 id="authModalTitle">Welcome</h2>
+    <input id="authName" type="text" placeholder="Your Name">
+    <input id="authEmail" type="email" placeholder="Email">
+    <input id="authPassword" type="password" placeholder="Password">
+    <button onclick="handleAuthSubmit()">Submit</button>
   </div>
 </div>
-
-<div id="toast" class="toast"></div>
 
 <script src="script.js"></script>
 </body>
