@@ -1,72 +1,451 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CashCourse — Learn Money. Build Your Future.</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CashCourse — Learn Money. Build Your Future.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root{--bg:#0a0e27;--bg2:#141829;--surface:#1a1f3a;--green:#1a9e6b;--green-light:#e6f7f1;--green-mid:#2ec98a;--teal:#0d8c7a;--teal-dark:#0a6b5e;--cyan:#00d9ff;--purple:#7c3aed;--ink:#ffffff;--ink2:#e0e0e0;--muted:#a0a0a0;--border:#2a2f4a;--accent-gold:#e8a634;--accent-rose:#e05c7a;--shadow-sm:0 1px 3px rgba(0,0,0,.3);--shadow-md:0 4px 16px rgba(0,0,0,.5);--shadow-lg:0 12px 40px rgba(26,158,107,.2);--radius:16px;--radius-sm:10px}
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        html{scroll-behavior:smooth;font-size:16px}
+        body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--ink);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+        
+        /* ANIMATIONS */
+        @keyframes float{0%,100%{transform:translateY(0px)}50%{transform:translateY(-20px)}}
+        @keyframes glow{0%,100%{box-shadow:0 0 20px rgba(0,217,255,.5),inset 0 0 20px rgba(0,217,255,.1)}50%{box-shadow:0 0 40px rgba(0,217,255,.8),inset 0 0 30px rgba(0,217,255,.2)}}
+        @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+        @keyframes slideInLeft{from{opacity:0;transform:translateX(-100px)}to{opacity:1;transform:translateX(0)}}
+        @keyframes slideInRight{from{opacity:0;transform:translateX(100px)}to{opacity:1;transform:translateX(0)}}
+        @keyframes fadeInUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+        @keyframes orbiting{0%{transform:rotate(0deg) translateX(100px) rotate(0deg)}100%{transform:rotate(360deg) translateX(100px) rotate(-360deg)}}
+        @keyframes shimmer{0%{background-position:-1000px 0}100%{background-position:1000px 0}}
+        @keyframes sciFiLine{0%{width:0;opacity:1}100%{width:100%;opacity:.5}}
+        @keyframes popIn{0%{opacity:0;transform:scale(.5) rotateX(-90deg)}100%{opacity:1;transform:scale(1) rotateX(0)}}
+        
+        /* NAV */
+        nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 5%;height:68px;background:rgba(10,14,39,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);box-shadow:0 8px 32px rgba(0,217,255,.1)}
+        .nav-logo{display:flex;align-items:center;gap:10px;font-family:'DM Serif Display',serif;font-size:1.45rem;color:var(--cyan);text-decoration:none;cursor:pointer;font-weight:700;letter-spacing:1px}
+        .nav-logo::after{content:'';width:40px;height:3px;background:linear-gradient(90deg,var(--green),var(--cyan));border-radius:2px;animation:sciFiLine 2s ease-in-out infinite}
+        .nav-logo-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--green),var(--cyan));border-radius:10px;display:flex;align-items:center;justify-content:center;color:white;font-size:.9rem;font-weight:700;font-family:'Sora',sans-serif;animation:glow 2s ease-in-out infinite}
+        .nav-links{display:flex;align-items:center;gap:2px;list-style:none}
+        .nav-links a{display:block;padding:8px 16px;color:var(--ink2);text-decoration:none;font-size:.875rem;font-weight:500;border-radius:var(--radius-sm);transition:all .3s;position:relative}
+        .nav-links a::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,var(--green),var(--cyan));border-radius:var(--radius-sm);opacity:0;transition:opacity .3s}
+        .nav-links a:hover{color:var(--cyan);transform:translateY(-2px)}
+        .nav-links a:hover::before{opacity:.1}
+        .btn-primary{padding:9px 22px;border-radius:var(--radius-sm);font-size:.875rem;font-weight:600;color:white;background:linear-gradient(135deg,var(--green),var(--cyan));border:none;cursor:pointer;text-decoration:none;font-family:'Sora',sans-serif;box-shadow:0 4px 16px rgba(0,217,255,.2);transition:all .3s;position:relative;overflow:hidden}
+        .btn-primary::before{content:'';position:absolute;top:-50%;right:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(255,255,255,.3),transparent);animation:pulse 3s ease-in-out infinite;opacity:0}
+        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,217,255,.4);opacity:.9}
+        
+        /* HERO V3 */
+        .hero-v3{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:68px 5% 0;background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%)}
+        .hero-v3::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(circle at 50% 50%,rgba(0,217,255,.1) 0%,transparent 50%),radial-gradient(circle at 80% 20%,rgba(124,58,237,.05) 0%,transparent 40%);pointer-events:none;animation:pulse 8s ease-in-out infinite}
+        .hero-v3-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;text-align:center;width:100%;max-width:1000px;padding-bottom:120px}
+        .hero-badge{display:inline-flex;align-items:center;gap:12px;font-size:.75rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--cyan);background:rgba(0,217,255,.1);border:1.5px solid var(--cyan);border-radius:50px;padding:10px 24px;margin-bottom:32px;animation:fadeInUp .8s ease forwards;backdrop-filter:blur(10px)}
+        .hero-badge::before{content:'●';animation:pulse 2s ease-in-out infinite;color:var(--green)}
+        .hero-title{font-family:'DM Serif Display',serif;font-size:clamp(3.5rem,12vw,8rem);line-height:1.1;background:linear-gradient(180deg,var(--cyan) 0%,var(--green) 50%,var(--teal) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:24px;animation:fadeInUp 1s ease forwards;letter-spacing:-1px}
+        .hero-subtitle{font-size:1.2rem;color:var(--ink2);max-width:600px;margin:0 auto 48px;line-height:1.7;animation:fadeInUp 1.2s ease forwards;font-weight:300}
+        .hero-cta{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-bottom:80px;animation:fadeInUp 1.4s ease forwards}
+        .btn-hero{padding:14px 36px;border-radius:12px;font-size:.95rem;font-weight:700;text-decoration:none;font-family:'Sora',sans-serif;transition:all .3s;letter-spacing:.5px;position:relative;overflow:hidden;cursor:pointer}
+        .btn-hero-primary{color:white;background:linear-gradient(135deg,var(--green),var(--cyan));border:2px solid transparent;box-shadow:0 8px 32px rgba(0,217,255,.3)}
+        .btn-hero-primary:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,217,255,.5)}
+        .btn-hero-secondary{color:var(--cyan);background:transparent;border:2px solid var(--cyan);box-shadow:0 0 20px rgba(0,217,255,.2)}
+        .btn-hero-secondary:hover{background:rgba(0,217,255,.1);transform:translateY(-4px);box-shadow:0 0 30px rgba(0,217,255,.4)}
+        
+        /* FLOATING ELEMENTS */
+        .floating-card{position:absolute;background:rgba(255,255,255,.05);border:1px solid var(--cyan);border-radius:16px;backdrop-filter:blur(10px);padding:20px;animation:float 6s ease-in-out infinite;z-index:1}
+        .floating-card-1{width:200px;height:120px;top:15%;left:10%;animation-delay:0s}
+        .floating-card-2{width:150px;height:100px;top:60%;right:15%;animation-delay:2s}
+        .floating-card-3{width:180px;height:140px;bottom:20%;left:20%;animation-delay:1s}
+        .card-content{display:flex;flex-direction:column;gap:8px;height:100%;justify-content:center}
+        .card-stat{font-size:1.8rem;font-weight:700;background:linear-gradient(135deg,var(--green),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .card-label{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+        
+        /* STATS SECTION */
+        .stats-container{position:relative;z-index:2;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:32px;width:100%;margin-bottom:80px}
+        .stat-box{text-align:center;padding:24px;background:rgba(0,217,255,.05);border:1px solid var(--cyan);border-radius:16px;backdrop-filter:blur(10px);animation:fadeInUp 1.6s ease forwards;transition:all .3s}
+        @for $i from 1 to 5{.stat-box:nth-child($i){animation-delay:calc($i * 0.1s)}}
+        .stat-box:hover{background:rgba(0,217,255,.1);border-color:var(--green);transform:translateY(-8px);box-shadow:0 16px 40px rgba(0,217,255,.2)}
+        .stat-number{font-size:2.5rem;font-weight:700;background:linear-gradient(135deg,var(--green),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+        .stat-label{font-size:.9rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-weight:600}
+        
+        /* FEATURES SECTION */
+        section{padding:120px 5%;position:relative;z-index:1}
+        .section-title{font-family:'DM Serif Display',serif;font-size:clamp(2rem,6vw,3.5rem);text-align:center;margin-bottom:64px;background:linear-gradient(180deg,var(--cyan) 0%,var(--green) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-1px}
+        .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:32px;max-width:1200px;margin:0 auto}
+        .feature-card{background:rgba(0,217,255,.05);border:1px solid var(--cyan);border-radius:16px;padding:40px 28px;text-align:center;backdrop-filter:blur(10px);transition:all .4s;cursor:pointer;position:relative;overflow:hidden}
+        .feature-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(0,217,255,.1),transparent);opacity:0;transition:opacity .4s}
+        .feature-card:hover{transform:translateY(-16px);border-color:var(--green);background:rgba(0,217,255,.1);box-shadow:0 24px 48px rgba(0,217,255,.2)}
+        .feature-card:hover::before{opacity:1}
+        .feature-icon{font-size:2.5rem;margin-bottom:16px}
+        .feature-title{font-size:1.3rem;font-weight:700;margin-bottom:12px;color:var(--cyan)}
+        .feature-desc{font-size:.95rem;color:var(--muted);line-height:1.6}
+        
+        /* POPUP FACTS */
+        .popup-fact{position:fixed;opacity:0;transform:translateX(-120px) scale(.3) rotateY(-90deg);pointer-events:none;z-index:50;animation:popIn .6s cubic-bezier(.34,1.56,.64,1) forwards;background:rgba(0,217,255,.1);border:2px solid var(--cyan);border-radius:16px;padding:24px 28px;max-width:300px;backdrop-filter:blur(16px);box-shadow:0 20px 60px rgba(0,217,255,.3)}
+        .popup-fact.left{left:30px;top:50%;margin-top:-75px}
+        .popup-fact.right{right:30px;top:50%;margin-top:-75px;animation-name:popInRight}
+        @keyframes popInRight{from{opacity:0;transform:translateX(120px) scale(.3) rotateY(90deg)}to{opacity:1;transform:translateX(0) scale(1) rotateY(0deg)}}
+        .popup-title{font-size:.85rem;text-transform:uppercase;letter-spacing:1px;color:var(--green);font-weight:700;margin-bottom:12px}
+        .popup-value{font-size:2rem;font-weight:700;background:linear-gradient(135deg,var(--green),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+        .popup-desc{font-size:.8rem;color:var(--muted);line-height:1.5}
+        .popup-chart{width:100%;height:80px;margin-top:16px;position:relative;overflow:hidden}
+        .chart-bar{display:inline-block;width:20%;height:100%;background:linear-gradient(180deg,var(--green),var(--cyan));border-radius:4px;margin:0 2%;animation:spin 3s ease-in-out infinite;transform-origin:50% 50%}
+        .chart-bar:nth-child(1){animation-delay:0s;height:60%}
+        .chart-bar:nth-child(2){animation-delay:.2s;height:75%}
+        .chart-bar:nth-child(3){animation-delay:.4s;height:85%}
+        .chart-bar:nth-child(4){animation-delay:.6s;height:70%}
+        
+        /* CURRICULUM SECTION */
+        .curriculum-hero{text-align:center;max-width:700px;margin:0 auto 64px}
+        .curriculum-desc{font-size:1.05rem;color:var(--ink2);line-height:1.8;margin-bottom:32px}
+        .modules-list{max-width:900px;margin:0 auto}
+        .module-card{background:rgba(0,217,255,.05);border:1px solid var(--cyan);border-radius:16px;padding:28px;margin-bottom:20px;transition:all .3s;cursor:pointer;backdrop-filter:blur(10px);position:relative;overflow:hidden}
+        .module-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:linear-gradient(180deg,var(--green),var(--cyan));}
+        .module-card:hover{background:rgba(0,217,255,.1);border-color:var(--green);transform:translateX(8px);box-shadow:0 12px 32px rgba(0,217,255,.2)}
+        .module-header{display:flex;align-items:center;gap:20px}
+        .module-num{width:50px;height:50px;border-radius:12px;background:linear-gradient(135deg,var(--green),var(--cyan));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.2rem;color:var(--bg);flex-shrink:0}
+        .module-info{flex:1;text-align:left}
+        .module-title{font-size:1.1rem;font-weight:700;color:var(--cyan);margin-bottom:4px}
+        .module-meta{font-size:.85rem;color:var(--muted)}
+        
+        /* TESTIMONIALS */
+        .testimonials-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:32px;max-width:1200px;margin:0 auto}
+        .testimonial-card{background:rgba(0,217,255,.05);border:1px solid var(--cyan);border-radius:16px;padding:32px;backdrop-filter:blur(10px);transition:all .4s;position:relative}
+        .testimonial-card:hover{background:rgba(0,217,255,.1);transform:translateY(-8px);box-shadow:0 16px 40px rgba(0,217,255,.2)}
+        .testimonial-quote{font-size:1rem;color:var(--ink2);line-height:1.8;margin-bottom:20px;font-style:italic}
+        .testimonial-author{display:flex;align-items:center;gap:12px}
+        .testimonial-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--cyan));display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--bg);font-size:.9rem}
+        .testimonial-name{font-weight:700;color:var(--cyan);font-size:.9rem}
+        .testimonial-role{font-size:.75rem;color:var(--muted)}
+        
+        /* FOOTER */
+        footer{background:linear-gradient(180deg,var(--bg2) 0%,rgba(10,14,39,.8) 100%);color:rgba(255,255,255,.6);padding:60px 5% 32px;border-top:1px solid var(--border)}
+        .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px;max-width:1200px;margin-left:auto;margin-right:auto}
+        .footer-col h4{font-size:.78rem;font-weight:700;color:rgba(255,255,255,.9);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
+        .footer-col a{display:block;font-size:.84rem;color:rgba(255,255,255,.5);text-decoration:none;margin-bottom:8px;transition:color .2s;cursor:pointer}
+        .footer-col a:hover{color:var(--green)}
+        
+        /* RESPONSIVENESS */
+        @media(max-width:768px){
+            .footer-grid{grid-template-columns:1fr}
+            .popup-fact{max-width:200px;padding:16px 20px}
+            .features-grid{grid-template-columns:1fr}
+            nav{padding:0 4%}
+            .nav-links{display:none}
+            .stat-box{padding:16px}
+            .stat-number{font-size:1.8rem}
+        }
+    </style>
 </head>
 <body>
 
-<!-- NAVIGATION -->
-<nav id="mainNav">
-  <div class="nav-logo" onclick="goToHome()">
-    <div class="nav-logo-icon">C$</div>
-    CashCourse
-  </div>
-  <ul class="nav-links">
-    <li><a href="#" onclick="showPage('home');return false;" class="active">Home</a></li>
-    <li><a href="#" onclick="showPage('curriculum');return false;">Curriculum</a></li>
-    <li><a href="#" onclick="showPage('lesson');return false;">Lessons</a></li>
-    <li><a href="#" onclick="showPage('resources');return false;">Resources</a></li>
-    <li><a href="#" onclick="showPage('about');return false;">About</a></li>
-  </ul>
-  <div class="nav-cta">
-    <button onclick="openAuthModal('login')">Log In</button>
-    <button onclick="openAuthModal('signup')">Start Learning</button>
-  </div>
+<!-- NAV -->
+<nav>
+    <div class="nav-logo">C$ CashCourse</div>
+    <div style="flex:1"></div>
+    <button class="btn-primary" onclick="document.getElementById('curriculum-section').scrollIntoView({behavior:'smooth'})">Learn Now →</button>
 </nav>
 
-<!-- PAGES -->
-<div id="page-home" class="page active">
-  <h1>Welcome to CashCourse!</h1>
-  <p>Learn Money. Build Your Future.</p>
+<!-- HERO -->
+<div class="hero-v3">
+    <div class="floating-card floating-card-1">
+        <div class="card-content">
+            <div class="card-stat">63</div>
+            <div class="card-label">Lessons</div>
+        </div>
+    </div>
+    <div class="floating-card floating-card-2">
+        <div class="card-content">
+            <div class="card-stat">9</div>
+            <div class="card-label">Chapters</div>
+        </div>
+    </div>
+    <div class="floating-card floating-card-3">
+        <div class="card-content">
+            <div class="card-stat">∞</div>
+            <div class="card-label">Free</div>
+        </div>
+    </div>
+    
+    <div class="hero-v3-inner">
+        <div class="hero-badge">🚀 Next Generation Financial Education</div>
+        <h1 class="hero-title">Learn Money<br>Like Never Before</h1>
+        <p class="hero-subtitle">Nine comprehensive chapters, 63 engaging lessons, and powerful tools to master personal finance. Completely free. Forever.</p>
+        <div class="hero-cta">
+            <button class="btn-hero btn-hero-primary">Start Learning Free →</button>
+            <button class="btn-hero btn-hero-secondary">Explore Features ↓</button>
+        </div>
+        
+        <div class="stats-container">
+            <div class="stat-box">
+                <div class="stat-number">9</div>
+                <div class="stat-label">Comprehensive Chapters</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">63</div>
+                <div class="stat-label">Engaging Lessons</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Forever Free</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">0</div>
+                <div class="stat-label">Ads or Paywalls</div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div id="page-curriculum" class="page">
-  <h1>Curriculum</h1>
-  <p>Structured modules to master financial literacy.</p>
-</div>
+<!-- WHY CASHCOURSE -->
+<section style="background:linear-gradient(180deg,transparent 0%,rgba(0,217,255,.02) 100%)">
+    <h2 class="section-title">Why CashCourse?</h2>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">📚</div>
+            <div class="feature-title">Comprehensive Content</div>
+            <div class="feature-desc">From budgeting basics to investment strategies, our 9 chapters cover everything you need to know about personal finance.</div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">💡</div>
+            <div class="feature-title">Learn at Your Pace</div>
+            <div class="feature-desc">Videos, articles, interactive tools, and quizzes designed to match your learning style and schedule.</div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🎯</div>
+            <div class="feature-title">Practical, Real-World</div>
+            <div class="feature-desc">Every lesson is designed to be immediately applicable to your daily life and financial decisions.</div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🔐</div>
+            <div class="feature-title">100% Free, Forever</div>
+            <div class="feature-desc">No subscriptions. No hidden fees. No paywalls. Financial education should be accessible to everyone.</div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <div class="feature-title">Lightning Fast</div>
+            <div class="feature-desc">Optimized for speed. Everything loads instantly on any device, anywhere in the world.</div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🌟</div>
+            <div class="feature-title">Expert-Created</div>
+            <div class="feature-desc">Developed by financial experts and educators who believe in making knowledge accessible.</div>
+        </div>
+    </div>
+</section>
 
-<div id="page-lesson" class="page">
-  <h1>Lesson</h1>
-  <p>Lesson content will appear here.</p>
-</div>
+<!-- CURRICULUM PREVIEW -->
+<section id="curriculum-section" style="background:linear-gradient(180deg,rgba(0,217,255,.02) 0%,transparent 100%)">
+    <h2 class="section-title">Our Curriculum</h2>
+    <div class="curriculum-hero">
+        <p class="curriculum-desc">Master the complete spectrum of financial knowledge across nine interconnected chapters, each building upon the last.</p>
+    </div>
+    <div class="modules-list">
+        <div class="module-card">
+            <div class="module-header">
+                <div class="module-num">1</div>
+                <div class="module-info">
+                    <div class="module-title">Understanding Money</div>
+                    <div class="module-meta">Learn the fundamentals: what money is, how it works, and why it matters</div>
+                </div>
+            </div>
+        </div>
+        <div class="module-card">
+            <div class="module-header">
+                <div class="module-num">2</div>
+                <div class="module-info">
+                    <div class="module-title">Budgeting & Spending</div>
+                    <div class="module-meta">Master the art of tracking, planning, and optimizing your finances</div>
+                </div>
+            </div>
+        </div>
+        <div class="module-card">
+            <div class="module-header">
+                <div class="module-num">3</div>
+                <div class="module-info">
+                    <div class="module-title">Saving & Emergency Funds</div>
+                    <div class="module-meta">Build financial security and peace of mind</div>
+                </div>
+            </div>
+        </div>
+        <div class="module-card">
+            <div class="module-header">
+                <div class="module-num">4</div>
+                <div class="module-info">
+                    <div class="module-title">Credit & Debt</div>
+                    <div class="module-meta">Understand credit scores, loans, and responsible debt management</div>
+                </div>
+            </div>
+        </div>
+        <div class="module-card">
+            <div class="module-header">
+                <div class="module-num">5</div>
+                <div class="module-info">
+                    <div class="module-title">Investing Basics</div>
+                    <div class="module-meta">Learn how to make your money grow</div>
+                </div>
+            </div>
+        </div>
+        <div class="module-card">
+            <div class="module-header">
+                <div class="module-num">6</div>
+                <div class="module-info">
+                    <div class="module-title">Taxes & Deductions</div>
+                    <div class="module-meta">Navigate tax season like a pro</div>
+                </div>
+            </div>
+        </div>
+        <div class="module-card">
+            <div class="module-header">
+                <div class="module-num">7</div>
+                <div class="module-info">
+                    <div class="module-title">Real-Life Decisions</div>
+                    <div class="module-meta">Apply financial wisdom to major life events</div>
+                </div>
+            </div>
+        </div>
+        <div class="module-card">
+            <div class="module-header">
+                <div class="module-num">8</div>
+                <div class="module-info">
+                    <div class="module-title">Building Wealth</div>
+                    <div class="module-meta">Long-term strategies for financial independence</div>
+                </div>
+            </div>
+        </div>
+        <div class="module-card">
+            <div class="module-header">
+                <div class="module-num">9</div>
+                <div class="module-info">
+                    <div class="module-title">Financial Psychology</div>
+                    <div class="module-meta">Master the mental side of money management</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-<div id="page-resources" class="page">
-  <h1>Resources</h1>
-  <p>Interactive calculators, templates, and tools.</p>
-</div>
+<!-- TESTIMONIALS -->
+<section>
+    <h2 class="section-title">What Our Learners Say</h2>
+    <div class="testimonials-grid">
+        <div class="testimonial-card">
+            <div class="testimonial-quote">"CashCourse transformed my financial life. I finally understand money, and I'm actually excited about my future!"</div>
+            <div class="testimonial-author">
+                <div class="testimonial-avatar">S</div>
+                <div>
+                    <div class="testimonial-name">Sarah Chen</div>
+                    <div class="testimonial-role">College Student</div>
+                </div>
+            </div>
+        </div>
+        <div class="testimonial-card">
+            <div class="testimonial-quote">"The practical tools and real-world examples made everything click. Best financial education resource I've found."</div>
+            <div class="testimonial-author">
+                <div class="testimonial-avatar">M</div>
+                <div>
+                    <div class="testimonial-name">Marcus Johnson</div>
+                    <div class="testimonial-role">Young Professional</div>
+                </div>
+            </div>
+        </div>
+        <div class="testimonial-card">
+            <div class="testimonial-quote">"Free, comprehensive, and actually engaging. I've recommended CashCourse to everyone I know."</div>
+            <div class="testimonial-author">
+                <div class="testimonial-avatar">A</div>
+                <div>
+                    <div class="testimonial-name">Amanda Rivera</div>
+                    <div class="testimonial-role">Parent & Entrepreneur</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-<div id="page-about" class="page">
-  <h1>About Us</h1>
-  <p>CashCourse was built to make financial education accessible to all.</p>
-</div>
+<!-- FOOTER -->
+<footer>
+    <div class="footer-grid">
+        <div>
+            <h4>CashCourse</h4>
+            <p style="font-size:.9rem;line-height:1.6;margin-bottom:16px">Financial education for everyone. Completely free. Comprehensive. Practical. Join thousands learning to master their finances today.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Learn</h4>
+            <a href="#">Curriculum</a>
+            <a href="#">All Lessons</a>
+            <a href="#">Interactive Tools</a>
+            <a href="#">Quizzes</a>
+        </div>
+        <div class="footer-col">
+            <h4>Company</h4>
+            <a href="#">About Us</a>
+            <a href="#">Our Mission</a>
+            <a href="#">Contact</a>
+            <a href="#">Blog</a>
+        </div>
+        <div class="footer-col">
+            <h4>Connect</h4>
+            <a href="#">Twitter</a>
+            <a href="#">LinkedIn</a>
+            <a href="#">GitHub</a>
+            <a href="#">Newsletter</a>
+        </div>
+    </div>
+    <div style="border-top:1px solid var(--border);padding-top:28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+        <span style="font-size:.78rem">© 2026 CashCourse. All rights reserved. | Financial Education for Everyone.</span>
+        <span style="font-size:.78rem">Made with 💚 by Aditiya & Param</span>
+    </div>
+</footer>
 
-<!-- AUTH MODAL -->
-<div id="authModal" class="modal-backdrop" style="display:none;">
-  <div class="modal-box">
-    <button onclick="closeAuthModal()">Close</button>
-    <h2 id="authModalTitle">Welcome</h2>
-    <input id="authName" type="text" placeholder="Your Name">
-    <input id="authEmail" type="email" placeholder="Email">
-    <input id="authPassword" type="password" placeholder="Password">
-    <button onclick="handleAuthSubmit()">Submit</button>
-  </div>
-</div>
+<!-- SCROLL POPUPS -->
+<script>
+    const popupFacts = [
+        { title: 'Learn', value: '63', desc: 'Lessons across 9 chapters', position: 'left', trigger: 0.3 },
+        { title: 'Mastery', value: '100%', desc: 'Free forever education', position: 'right', trigger: 0.5 },
+        { title: 'Impact', value: '∞', desc: 'Lives changed daily', position: 'left', trigger: 0.7 },
+        { title: 'Community', value: '🚀', desc: 'Growing daily', position: 'right', trigger: 0.85 }
+    ];
+    
+    const container = document.body;
+    
+    popupFacts.forEach((fact, index) => {
+        const popup = document.createElement('div');
+        popup.className = `popup-fact ${fact.position}`;
+        popup.innerHTML = `
+            <div class="popup-title">${fact.title}</div>
+            <div class="popup-value">${fact.value}</div>
+            <div class="popup-desc">${fact.desc}</div>
+            <div class="popup-chart">
+                <div class="chart-bar"></div>
+                <div class="chart-bar"></div>
+                <div class="chart-bar"></div>
+                <div class="chart-bar"></div>
+            </div>
+        `;
+        container.appendChild(popup);
+        
+        window.addEventListener('scroll', () => {
+            const scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+            if (scrollPercent >= fact.trigger && scrollPercent < fact.trigger + 0.15) {
+                popup.style.opacity = '1';
+                popup.style.pointerEvents = 'auto';
+            } else {
+                popup.style.opacity = '0';
+                popup.style.pointerEvents = 'none';
+            }
+        });
+    });
+    
+    // Smooth scroll button clicks
+    document.querySelectorAll('.btn-primary').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.getElementById('curriculum-section').scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+</script>
 
-<script src="script.js"></script>
 </body>
 </html>
